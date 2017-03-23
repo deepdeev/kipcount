@@ -1,1 +1,24 @@
 /* CSS declarations go here */
+.container{
+  border-style: solid;
+  border-width: 2px;
+  border-color: blue;
+}
+
+.summary{
+  border-style: solid;
+  border-width: 2px;
+  border-color: red;
+}
+
+.total {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
+.accounts {
+  border-style: solid;
+  border-width: 2px;
+  border-color: green;
+}
