@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 export default class Transaction extends Component {
   render() {
     return (
-      <li>{this.props.transaction.text}</li>
+      <li>{this.props.transaction.io}:{this.props.transaction.amount} </li>
     );
   }
 }
@@ -12,5 +12,5 @@ export default class Transaction extends Component {
 Transaction.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
-  task: PropTypes.object.isRequired,
+  transaction: PropTypes.object.isRequired,
 };
