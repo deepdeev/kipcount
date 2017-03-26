@@ -5,7 +5,7 @@ export default class Transaction extends Component {
   render()
   {
     return (
-        <tr className="transactionRow">
+        <tr className={this.props.transaction.io=="In"?"transactionRow success":"transactionRow danger"}>
           <td className="transactionField dateField">
             <p>{this.props.transaction.date.toISOString().trim().split("T")[0]}</p>
           </td>

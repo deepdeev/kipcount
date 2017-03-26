@@ -5,9 +5,8 @@ import {Transactions} from '../api/transactions.js';
 import Transaction from './Transaction.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import DatePicker from 'material-ui/DatePicker';
 import CustomDataPicker from './CustomDataPicker';
+import CustomCheckBox from './CustomCheckBox';
 
 // App component - represents the whole app
 class App extends Component {
@@ -17,9 +16,10 @@ class App extends Component {
   {
     super(props);
 
-    // this.state = {
-    //   newTransactionDate: new Date(),
-    // };
+    this.state = {
+      types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}]
+
+    };
 
     this.handleDateChange = this.handleDateChange.bind(this);
   }
@@ -33,8 +33,43 @@ class App extends Component {
 
   renderTransactions()
   {
-    return this.props.transactions.map((transaction) => (
+    let filteredTransactions = this.props.transactions;
+    if (!this.state.types[0].selected || !this.state.types[1].selected)
+    {
+      if (this.state.types[0].selected)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          return currentTransaction.account == "Cash"
+        });
+      if (this.state.types[1].selected)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          return currentTransaction.account == "Bank"
+        });
+    }
+    if (!this.state.types[2].selected || !this.state.types[3].selected)
+    {
+      if (this.state.types[2].selected)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          return currentTransaction.io == "In"
+        });
+      if (this.state.types[3].selected)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          return currentTransaction.io == "Out"
+        });
+    }
+    return filteredTransactions.map((transaction) => (
         <Transaction key={transaction._id} transaction={transaction}/>
+    ));
+  }
+
+  renderCheckBoxs()
+  {
+    return this.state.types.map((currentType, index) => (
+        <CustomCheckBox key={currentType.type} index={index} type={currentType.type}
+                        handleFiltersChange={this.handleFiltersChange.bind(this)}/>
     ));
   }
 
@@ -111,121 +146,135 @@ class App extends Component {
     return values;
   }
 
+  handleFiltersChange(index)
+  {
+    let temp = this.state.types;
+    temp[index].selected = !temp[index].selected;
+    this.setState({types: temp});
+
+    console.log(this.state.types[index].type + "  " + this.state.types[index].selected);
+  }
+
+//
+//     let query = {
+//       "account" : {$in:()=>{
+//         if((this.state.types[0].selected && this.state.types[1].selected) || (!this.state.types[0].selected && !this.state.types[1].selected))
+//           return ["Cash","Bank"];
+//         return this.state.types[0].selected?["Cash"]:["Bank"];
+//
+//       }},
+//       "io" : {$in:()=>{
+//         if((this.state.types[2].selected && this.state.types[3].selected) || (!this.state.types[2].selected && !this.state.types[3].selected))
+//           return ["In","Out"];
+//         return this.state.types[2].selected?["In"]:["Out"];
+//
+//       }}};
+// console.log(Transactions.find({"account" : "Bank","io" : {$in:["Out","In"]}}).fetch());
+//     this.setState({transactions:Transactions.find({"account" : "Bank","io" : {$in:["Out","In"]}}).fetch()});
+
   render()
   {
     return (
-        <MuiThemeProvider>
-          <div className="container">
-            <div className="row principal">
-              <div className="col-md-3">
-                <div className="row accountsPanel panel">
-                  <div className="col-md-12 totalBox box">
-                    <h3 className="accountTitle">Total</h3>
-                    <h1 className="bigNumber">{this.calculateValues()[0]}</h1>
-                  </div>
-                  <div className="col-md-12 account1Box box">
-                    <h3 className="accountTitle">Cash</h3>
-                    <h1 className="bigNumber">{this.calculateValues()[1]}</h1>
-                    <div className="accountsText">Last Transaction: -100.000 in 21/03/2017</div>
-                  </div>
-                  <div className="col-md-12 account2Box box">
-                    <h3 className="accountTitle">Bank Account</h3>
-                    <h1 className="bigNumber">{this.calculateValues()[2]}</h1>
-                    <div className="accountsText">Last Transaction: +200.000 in 21/03/2017</div>
-                  </div>
+
+        <div className="container">
+          <div className="row principal">
+            <div className="col-md-3">
+              <div className="row accountsPanel panel">
+                <div className="col-md-12 totalBox box">
+                  <h3 className="accountTitle">Total</h3>
+                  <h1 className="bigNumber">{this.calculateValues()[0]}</h1>
+                </div>
+                <div className="col-md-12 account1Box box">
+                  <h3 className="accountTitle">Cash</h3>
+                  <h1 className="bigNumber">{this.calculateValues()[1]}</h1>
+                  <div className="accountsText">Last Transaction: -100.000 in 21/03/2017</div>
+                </div>
+                <div className="col-md-12 account2Box box">
+                  <h3 className="accountTitle">Bank Account</h3>
+                  <h1 className="bigNumber">{this.calculateValues()[2]}</h1>
+                  <div className="accountsText">Last Transaction: +200.000 in 21/03/2017</div>
                 </div>
               </div>
+            </div>
 
-              <div className="col-md-9">
-                <div className="row transactionsPanel panel">
-                  <div className="col-md-12 filtersBox box">
+            <div className="col-md-9">
+              <div className="row transactionsPanel panel">
+                <div className="col-md-12 filtersBox box">
+                  <div className="row">
+                    <div className="col-md-2 transactionsTitle1">
+                      <h4>Filters</h4>
+                    </div>
+                    <div className="col-md-10">
+                      <form className="checkBoxes">
+                        {this.renderCheckBoxs()}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-12 addTransactionBox box">
+                  <div className="form" onSubmit={this.handleSubmit.bind(this)}>
                     <div className="row">
-                      <div className="col-md-2 transactionsTitle1">
-                        <h4>Filters</h4>
+                      <div className="col-md-2 transactionsTitle2">
+                        <h4>Add Transaction</h4>
                       </div>
                       <div className="col-md-10">
-                        <form className="checkBoxes">
-                          <div className="checkbox-inline">
-                            <label><input type="checkbox" value=""></input>Cash</label>
-                          </div>
-                          <div className="checkbox-inline">
-                            <label><input type="checkbox" value=""></input>Bank Account</label>
-                          </div>
-                          <div className="checkbox-inline">
-                            <label><input type="checkbox" value=""></input>Income</label>
-                          </div>
-                          <div className="checkbox-inline">
-                            <label><input type="checkbox" value=""></input>Discharge</label>
+                        <form onSubmit={this.handleSubmit.bind(this)}>
+                          <div className="row">
+                            <div className="col-md-2 addTransactionField">
+                              <input type="text" className="form-control" id="amount" ref="amount"
+                                     placeholder="Amount"/>
+                            </div>
+                            <div className="col-md-4 addTransactionField">
+                              <input type="text" className="form-control" id="description" ref="description"
+                                     placeholder="Description"/>
+                            </div>
+                            <div className="col-md-2 addTransactionField">
+                              <select className="form-control littleSelectList" ref="account" name="account">
+                                <option value="Cash">Cash</option>
+                                <option value="Bank">Bank</option>
+                              </select>
+                            </div>
+                            <div className="col-md-1 addTransactionField ">
+                              <select className="form-control littleSelectList" ref="io" name="io">
+                                <option value="In">In</option>
+                                <option value="Out">Out</option>
+                              </select>
+                            </div>
+                            <div className="col-md-2 addTransactionBtn">
+                              <CustomDataPicker/>
+                            </div>
+                            <div className="col-md-1 addTransactionBtn">
+                              <button type="submit" className="btn btn-default"><i className="fa fa-save"> </i>
+                              </button>
+                            </div>
                           </div>
                         </form>
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-12 addTransactionBox box">
-                    <div className="form" onSubmit={this.handleSubmit.bind(this)}>
-                      <div className="row">
-                        <div className="col-md-2 transactionsTitle2">
-                          <h4>Add Transaction</h4>
-                        </div>
-                        <div className="col-md-10">
-                          <form onSubmit={this.handleSubmit.bind(this)}>
-                            <div className="row">
-                              <div className="col-md-2 addTransactionField">
-                                <input type="text" className="form-control" id="amount" ref="amount"
-                                       placeholder="Amount"/>
-                              </div>
-                              <div className="col-md-4 addTransactionField">
-                                <input type="text" className="form-control" id="description" ref="description"
-                                       placeholder="Description"/>
-                              </div>
-                              <div className="col-md-2 addTransactionField">
-                                <select className="form-control littleSelectList" ref="account" name="account">
-                                  <option value="Cash">Cash</option>
-                                  <option value="Bank">Bank</option>
-                                </select>
-                              </div>
-                              <div className="col-md-1 addTransactionField ">
-                                <select className="form-control littleSelectList" ref="io" name="io">
-                                  <option value="In">In</option>
-                                  <option value="Out">Out</option>
-                                </select>
-                              </div>
-                              <div className="col-md-2 addTransactionBtn">
-                                <CustomDataPicker/>
-                              </div>
-                              <div className="col-md-1 addTransactionBtn">
-                                <button type="submit" className="btn btn-default"><i className="fa fa-save"> </i>
-                                </button>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-12 transactionsBox box">
-                    <div className="table-responsive">
-                      <table className="table table-hover ">
-                        <tbody>
-                        {this.renderTransactions()}
-                        </tbody>
+                </div>
+                <div className="col-md-12 transactionsBox box">
+                  <div className="table-responsive">
+                    <table className="table table-hover ">
+                      <tbody>
+                      {this.renderTransactions()}
+                      </tbody>
 
-                      </table>
-                    </div>
+                    </table>
                   </div>
-                  <div className="col-md-12 summaryBox box">
-                    <div className="row">
-                      <div className="col-md-2 transactionsTitle2">
-                        <h4>Summary</h4>
-                      </div>
+                </div>
+                <div className="col-md-12 summaryBox box">
+                  <div className="row">
+                    <div className="col-md-2 transactionsTitle2">
+                      <h4>Summary</h4>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
-        </MuiThemeProvider>
+        </div>
+
     );
   }
 }
