@@ -62,18 +62,11 @@ class App extends Component {
       if (this.state.startDate!=null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          //TODO David complete eso
-          // return currentTransaction.io == "In"
-          // ISO String, ex: "2016-11-19T12:00:00.000Z"
-          console.log(currentTransaction.date+"   "+new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z"));
           return currentTransaction.date>=new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z");
         });
       if (this.state.endDate!=null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          //TODO David complete eso
-          // return currentTransaction.io == "Out"
-          console.log(currentTransaction.date+"   "+new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z"));
           return currentTransaction.date<=new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z");
         });
     }
@@ -82,15 +75,11 @@ class App extends Component {
 
   renderTransactions()
   {
-    console.log('rendering transactions');
-    console.log(this.state);
-    console.log("------------------------");
+    // console.log('rendering transactions');
+    // console.log(this.state);
+    // console.log("------------------------");
+    //
 
-
-    //const startDate = new Date(this.refs.startDate.value);
-    //console.log(startDate);
-    //const endDate = new Date(document.getElementById("endDate").value);
-    //console.log(endDate);
     let filteredTransactions = this.filteredTransactions();
     return filteredTransactions.map((transaction) => (
         <Transaction key={transaction._id} transaction={transaction}/>
