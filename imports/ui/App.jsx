@@ -6,22 +6,22 @@ import Transaction from './Transaction.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import CustomDataPicker from './CustomDataPicker';
+import CustomDateFilter from './CustomDateFilter';
 import CustomCheckBox from './CustomCheckBox';
 
 // App component - represents the whole app
 class App extends Component {
-
-
   constructor(props)
   {
     super(props);
-
     this.state = {
       types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}]
 
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.changeDateFilter = this.changeDateFilter.bind(this);
+    this.filteredTransactions = this.filteredTransactions.bind(this);
   }
 
   handleDateChange(value, date)
@@ -31,8 +31,7 @@ class App extends Component {
     // });
   };
 
-  renderTransactions()
-  {
+  filteredTransactions(){
     let filteredTransactions = this.props.transactions;
     if (!this.state.types[0].selected || !this.state.types[1].selected)
     {
@@ -60,13 +59,72 @@ class App extends Component {
           return currentTransaction.io == "Out"
         });
     }
+    return filteredTransactions;
+  }
+
+  renderTransactions()
+  {
+    console.log('rendering transactions');
+    console.log(this.state);
+    console.log("------------------------");
+
+
+    //const startDate = new Date(this.refs.startDate.value);
+    //console.log(startDate);
+    //const endDate = new Date(document.getElementById("endDate").value);
+    //console.log(endDate);
+    let filteredTransactions = this.filteredTransactions();
     return filteredTransactions.map((transaction) => (
         <Transaction key={transaction._id} transaction={transaction}/>
     ));
   }
+  renderSummary(){
+    let filteredTransactions = this.filteredTransactions();
+    let q =  filteredTransactions.length
+    let subtotal = 0;
+    let qIn = 0;
+    let qOut = 0;
+    filteredTransactions.map( (transaction) => {
+      if(transaction.io === "In"){
+        subtotal += transaction.amount;
+        qIn += 1;
+      }
+      else {
+        subtotal -= transaction.amount;
+        qOut +=1;
+      }
+    })
+
+    return(
+      <div>
+        <div className="col-md-3 summaryTitle">
+          Subtotal:
+          <br></br>
+          {subtotal}
+        </div>
+        <div className="col-md-3 summaryTitle">
+          Quantity:
+          <br></br>
+          {q}
+        </div>
+        <div className="col-md-3 summaryTitle">
+          In:
+          <br></br>
+          {qIn}
+        </div>
+        <div className="col-md-3 summaryTitle">
+          Out:
+          <br></br>
+          {qOut}
+        </div>
+
+      </div>
+    )
+  }
 
   renderCheckBoxs()
   {
+    //console.log(this.state);
     return this.state.types.map((currentType, index) => (
         <CustomCheckBox key={currentType.type} index={index} type={currentType.type}
                         handleFiltersChange={this.handleFiltersChange.bind(this)}/>
@@ -145,6 +203,17 @@ class App extends Component {
     //  console.log("total "+total);
     return values;
   }
+  changeDateFilter(dateType, value){
+
+    if(dateType === "startDate"){
+      this.setState({startDate: value})
+    }
+    else if(dateType === "endDate"){
+      this.setState({endDate: value})
+    } else{
+      console.log("error")
+    }
+  }
 
   handleFiltersChange(index)
   {
@@ -205,9 +274,23 @@ class App extends Component {
                       <h4>Filters</h4>
                     </div>
                     <div className="col-md-10">
-                      <form className="checkBoxes">
-                        {this.renderCheckBoxs()}
-                      </form>
+                      <div className="col-md-6">
+                        <form className="checkBoxes">
+                          {this.renderCheckBoxs()}
+
+                        </form>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="startDate col-md-6 addTransactionBtn">
+                          Start Date:
+                          <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
+                        </div>
+                        <div className="endDate col-md-6 addTransactionBtn">
+                          End Date:
+                          <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -268,6 +351,9 @@ class App extends Component {
                     <div className="col-md-2 transactionsTitle2">
                       <h4>Summary</h4>
                     </div>
+                    <div className="col-md-10 transactionsTitle2">
+                      {this.renderSummary()}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -286,6 +372,6 @@ App.propTypes = {
 export default createContainer(() =>
 {
   return {
-    transactions: Transactions.find({}).fetch(),
+    transactions: Transactions.find({}, { sort: { date: -1 } }).fetch(),
   };
 }, App);

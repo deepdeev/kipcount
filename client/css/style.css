@@ -75,6 +75,11 @@ body {
     /*padding-left: 10px;*/
     /*padding-right: 10px;*/
 }
+.summaryTitle {
+  min-height: 8vh;
+  border-right: #dfe8f1 solid 1px;
+  text-align: center;
+}
 
 .addTransactionField, .addTransactionBtn {
     margin-top: 2vh;
