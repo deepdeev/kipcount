@@ -11,5 +11,6 @@ Meteor.startup(() => {
   $.getScript('../../js/jquery.min.js', function(){});
   $.getScript('../../js/main.js', function(){});
 
+
   render(<App />, document.getElementById('render-target'));
 });

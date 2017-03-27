@@ -164,9 +164,8 @@ class App extends Component {
 
   calculateValues()
   {
-    transactions = this.props.transactions;
+    let transactions = this.props.transactions;
     let values = [];
-    let total = 0;
     let c1 = 0;
     let c2 = 0;
     for (let i = 0; i < transactions.length; i++)
@@ -194,7 +193,7 @@ class App extends Component {
         }
       }
     }
-    total = c1 + c2;
+    let total = c1 + c2;
     values.push(total);
     values.push(c1);
     values.push(c2);
@@ -221,25 +220,8 @@ class App extends Component {
     temp[index].selected = !temp[index].selected;
     this.setState({types: temp});
 
-    console.log(this.state.types[index].type + "  " + this.state.types[index].selected);
+    // console.log(this.state.types[index].type + "  " + this.state.types[index].selected);
   }
-
-//
-//     let query = {
-//       "account" : {$in:()=>{
-//         if((this.state.types[0].selected && this.state.types[1].selected) || (!this.state.types[0].selected && !this.state.types[1].selected))
-//           return ["Cash","Bank"];
-//         return this.state.types[0].selected?["Cash"]:["Bank"];
-//
-//       }},
-//       "io" : {$in:()=>{
-//         if((this.state.types[2].selected && this.state.types[3].selected) || (!this.state.types[2].selected && !this.state.types[3].selected))
-//           return ["In","Out"];
-//         return this.state.types[2].selected?["In"]:["Out"];
-//
-//       }}};
-// console.log(Transactions.find({"account" : "Bank","io" : {$in:["Out","In"]}}).fetch());
-//     this.setState({transactions:Transactions.find({"account" : "Bank","io" : {$in:["Out","In"]}}).fetch()});
 
   render()
   {
@@ -271,7 +253,7 @@ class App extends Component {
                 <div className="col-md-12 filtersBox box">
                   <div className="row">
                     <div className="col-md-2 transactionsTitle1">
-                      <h4>Filters</h4>
+                      <h3>Filters</h3>
                     </div>
                     <div className="col-md-10">
                       <div className="col-md-6">
@@ -298,7 +280,7 @@ class App extends Component {
                   <div className="form" onSubmit={this.handleSubmit.bind(this)}>
                     <div className="row">
                       <div className="col-md-2 transactionsTitle2">
-                        <h4>Add Transaction</h4>
+                        <h3>Add Transaction</h3>
                       </div>
                       <div className="col-md-10">
                         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -349,7 +331,7 @@ class App extends Component {
                 <div className="col-md-12 summaryBox box">
                   <div className="row">
                     <div className="col-md-2 transactionsTitle2">
-                      <h4>Summary</h4>
+                      <h3>Summary</h3>
                     </div>
                     <div className="col-md-10 transactionsTitle2">
                       {this.renderSummary()}
