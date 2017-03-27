@@ -9,8 +9,9 @@ body {
 
 .temporalNavBar {
     min-height: 15vh;
-    background-color: #39A0ED;
+    /*background-color: #39A0ED;*/
     /*background-color:#4472CA;*/
+    background-color:#000;
     margin-bottom: 20px;
 }
 
