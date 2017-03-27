@@ -8,6 +8,9 @@ export default class Transaction extends Component {
         <tr className={this.props.transaction.io=="In"?"transactionRow success":"transactionRow danger"}>
           <td className="transactionField dateField">
             <p>{this.props.transaction.date.toISOString().trim().split("T")[0]}</p>
+            <span className="text">
+              <strong>{this.props.transaction.username}</strong>
+            </span>
           </td>
           <td className="transactionField descriptionField">
             <p>{this.props.transaction.description}</p>
