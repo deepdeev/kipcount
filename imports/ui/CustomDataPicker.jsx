@@ -9,9 +9,10 @@ export default class CustomDataPicker extends Component {
     this.state = {
       value: new Date().toISOString()
     };
-this.handleChange=this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-    handleChange(value, formattedValue)
+
+  handleChange(value, formattedValue)
   {
     this.setState({
       value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z"
@@ -30,7 +31,8 @@ this.handleChange=this.handleChange.bind(this);
   render()
   {
     return (
-        <DatePicker id="addTransactionDatePicker" value={this.state.value} onChange={this.handleChange} showClearButton={false}/>
+        <DatePicker id="addTransactionDatePicker" value={this.state.value} onChange={this.handleChange}
+                    showClearButton={false}/>
     );
   }
 }

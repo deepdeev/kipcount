@@ -15,48 +15,66 @@ class App extends Component {
   {
     super(props);
     this.state = {
-      types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}]
+      types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}],
+      startDate:null,
+      endDate:null
 
     };
 
-    this.handleDateChange = this.handleDateChange.bind(this);
+
     this.changeDateFilter = this.changeDateFilter.bind(this);
     this.filteredTransactions = this.filteredTransactions.bind(this);
   }
 
-  handleDateChange(value, date)
-  {
-    // this.setState({
-    //   newTransactionDate: date,
-    // });
-  };
-
   filteredTransactions(){
     let filteredTransactions = this.props.transactions;
+    //Cash y Bank filter
     if (!this.state.types[0].selected || !this.state.types[1].selected)
     {
       if (this.state.types[0].selected)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.account == "Cash"
+          return currentTransaction.account == "Cash";
         });
       if (this.state.types[1].selected)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.account == "Bank"
+          return currentTransaction.account == "Bank";
         });
     }
+    //In and Out filter
     if (!this.state.types[2].selected || !this.state.types[3].selected)
     {
       if (this.state.types[2].selected)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.io == "In"
+          return currentTransaction.io == "In";
         });
       if (this.state.types[3].selected)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.io == "Out"
+          return currentTransaction.io == "Out";
+        });
+    }
+    //Date Filters
+    if (this.state.startDate!=null || this.state.endDate!=null)
+    {
+      if (this.state.startDate!=null)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          //TODO David complete eso
+          // return currentTransaction.io == "In"
+          // ISO String, ex: "2016-11-19T12:00:00.000Z"
+          console.log(currentTransaction.date+"   "+new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z"));
+          return currentTransaction.date>=new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z");
+        });
+      if (this.state.endDate!=null)
+        filteredTransactions = filteredTransactions.filter((currentTransaction) =>
+        {
+          //TODO David complete eso
+          // return currentTransaction.io == "Out"
+          console.log(currentTransaction.date+"   "+new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z"));
+          return currentTransaction.date<=new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z");
         });
     }
     return filteredTransactions;
@@ -80,7 +98,7 @@ class App extends Component {
   }
   renderSummary(){
     let filteredTransactions = this.filteredTransactions();
-    let q =  filteredTransactions.length
+    let q =  filteredTransactions.length;
     let subtotal = 0;
     let qIn = 0;
     let qOut = 0;
@@ -93,7 +111,7 @@ class App extends Component {
         subtotal -= transaction.amount;
         qOut +=1;
       }
-    })
+    });
 
     return(
       <div>
@@ -212,6 +230,7 @@ class App extends Component {
     } else{
       console.log("error")
     }
+    console.log(dateType+"  "+value);
   }
 
   handleFiltersChange(index)

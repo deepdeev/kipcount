@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 let DatePicker = require("react-bootstrap-date-picker");
-// Custom Data Picker component - allow the user to select a date
+// Custom Data Picker component - allow the user to select a date to apply a filter
 export default class CustomDateFilter extends Component {
   constructor(props)
   {
@@ -16,10 +16,10 @@ export default class CustomDateFilter extends Component {
   handleChange(value, formattedValue)
   {
     this.setState({
-      value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z"
-      formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
+      value: value // ISO String, ex: "2016-11-19T12:00:00.000Z"
+    // //   formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
     });
-    this.props.changeDateFilter(this.props.dateType, new Date(this.state.value));
+    this.props.changeDateFilter(this.props.dateType, value);
   }
 
   componentDidUpdate()
@@ -33,7 +33,7 @@ export default class CustomDateFilter extends Component {
   render()
   {
     return (
-        <DatePicker id= {this.props.dateType} value={this.state.value} onChange={this.handleChange} showClearButton={false}/>
+        <DatePicker id={this.props.dateType} value={this.state.value} onChange={this.handleChange} showClearButton={false}/>
     );
   }
 }
