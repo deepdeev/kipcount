@@ -366,10 +366,12 @@ class App extends Component {
 
 App.propTypes = {
   transactions: PropTypes.array.isRequired,
+  currentUser: PropTypes.object,
 };
 
 export default createContainer(() =>
 {
+  Meteor.subscribe('transactions');
   return {
     transactions: Transactions.find({}, { sort: { date: -1 } }).fetch(),
     currentUser: Meteor.user(),
