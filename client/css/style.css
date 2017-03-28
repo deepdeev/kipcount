@@ -2,21 +2,27 @@ body {
     background-color: #fafafa;
     font-family: 'Roboto Condensed', sans-serif;
     /*color: #000;*/
+    overflow-x: hidden;
 }
 @font-face {
     font-family: 'Cookit-Regular';
     src: url('/fonts/Cookit-Regular.ttf');
 }
 .temporalNavBar {
-    min-height: 15vh;
+    height: 15vh;
     /*background-color: #39A0ED;*/
     /*background-color:#4472CA;*/
     /*background-color:#0099CC;*/
-background-color: #244F75;
+    background-color: #244F75;
     /*background-color:#000;*/
     margin-bottom: 20px;
 }
-
+.navBarTitle
+{
+    font-family: 'Cookit-Regular';
+    font-size: 10vh;
+    color:#fff;
+}
 .container {
     /*margin-top: 100px;*/
 }

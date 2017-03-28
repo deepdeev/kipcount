@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import {createContainer} from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import {Transactions} from '../api/transactions.js';
@@ -20,8 +20,8 @@ class App extends Component {
     super(props);
     this.state = {
       types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}],
-      startDate:null,
-      endDate:null
+      startDate: null,
+      endDate: null
 
     };
 
@@ -30,9 +30,9 @@ class App extends Component {
     this.filteredTransactions = this.filteredTransactions.bind(this);
   }
 
-  filteredTransactions(){
+  filteredTransactions()
+  {
     let filteredTransactions = this.props.transactions;
-
 
 
     //Cash y Bank filter
@@ -64,17 +64,17 @@ class App extends Component {
         });
     }
     //Date Filters
-    if (this.state.startDate!=null || this.state.endDate!=null)
+    if (this.state.startDate != null || this.state.endDate != null)
     {
-      if (this.state.startDate!=null)
+      if (this.state.startDate != null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.date>=new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z");
+          return currentTransaction.date >= new Date(this.state.startDate.split("T")[0] + "T00:00:00.000Z");
         });
-      if (this.state.endDate!=null)
+      if (this.state.endDate != null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.date<=new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z");
+          return currentTransaction.date <= new Date(this.state.endDate.split("T")[0] + "T23:59:59.000Z");
         });
     }
     return filteredTransactions;
@@ -92,46 +92,46 @@ class App extends Component {
         <Transaction key={transaction._id} transaction={transaction}/>
     ));
   }
-  renderSummary(){
+
+  renderSummary()
+  {
     let filteredTransactions = this.filteredTransactions();
-    let q =  filteredTransactions.length;
+    let q = filteredTransactions.length;
     let subtotal = 0;
     let qIn = 0;
     let qOut = 0;
-    filteredTransactions.map( (transaction) => {
-      if(transaction.io === "In"){
+    filteredTransactions.map((transaction) =>
+    {
+      if (transaction.io === "In")
+      {
         subtotal += transaction.amount;
         qIn += 1;
       }
-      else {
+      else
+      {
         subtotal -= transaction.amount;
-        qOut +=1;
+        qOut += 1;
       }
     });
 
-    return(
-        <div>
-          <div className="col-md-3 summaryTitle">
-            Subtotal:
-            <br></br>
-            {subtotal}
+    return (
+        <div className="row">
+          <div className="col-md-3 summaryField">
+            <h4>Subtotal</h4>
+            <p>{subtotal}</p>
           </div>
-          <div className="col-md-3 summaryTitle">
-            Quantity:
-            <br></br>
-            {q}
+          <div className="col-md-3 summaryField">
+            <h4>Quantity</h4>
+            <p>{q}</p>
           </div>
-          <div className="col-md-3 summaryTitle">
-            In:
-            <br></br>
-            {qIn}
+          <div className="col-md-3 summaryField">
+            <h4>In</h4>
+            <p>{qIn}</p>
           </div>
-          <div className="col-md-3 summaryTitle">
-            Out:
-            <br></br>
-            {qOut}
+          <div className="col-md-3 summaryField">
+            <h4>Out</h4>
+            <p>{qOut}</p>
           </div>
-
         </div>
     )
   }
@@ -214,17 +214,23 @@ class App extends Component {
     values.push(c2);
     return values;
   }
-  changeDateFilter(dateType, value){
 
-    if(dateType === "startDate"){
+  changeDateFilter(dateType, value)
+  {
+
+    if (dateType === "startDate")
+    {
       this.setState({startDate: value})
     }
-    else if(dateType === "endDate"){
+    else if (dateType === "endDate")
+    {
       this.setState({endDate: value})
-    } else{
+    }
+    else
+    {
       console.log("error")
     }
-    console.log(dateType+"  "+value);
+    console.log(dateType + "  " + value);
   }
 
   handleFiltersChange(index)
@@ -239,127 +245,139 @@ class App extends Component {
   render()
   {
     return (
+        <div>
+            <div className="row temporalNavBar">
+              <div className="col-md-2"></div>
+              <div className="col-md-6">
+                <h1 className="navBarTitle">KipCount</h1>
+              </div>
+              <div className="col-md-3">
+                <AccountsUIWrapper/>
+              </div>
+              <div className="col-md-1"></div>
+          </div>
+          <div className="container">
 
-        <div className="container">
-          <AccountsUIWrapper />
-          { this.props.currentUser ?
-              <div className="row principal">
-                <div className="col-md-3">
-                  <div className="row accountsPanel panel">
-                    <div className="col-md-12 totalBox box">
-                      <h3 className="accountTitle">Total</h3>
-                      <h1 className="bigNumber">{this.calculateValues()[0]}</h1>
-                    </div>
-                    <div className="col-md-12 account1Box box">
-                      <h3 className="accountTitle">Cash</h3>
-                      <h1 className="bigNumber">{this.calculateValues()[1]}</h1>
-                      <div className="accountsText">Last Transaction: -100.000 in 21/03/2017</div>
-                    </div>
-                    <div className="col-md-12 account2Box box">
-                      <h3 className="accountTitle">Bank Account</h3>
-                      <h1 className="bigNumber">{this.calculateValues()[2]}</h1>
-                      <div className="accountsText">Last Transaction: +200.000 in 21/03/2017</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-9">
-                  <div className="row transactionsPanel panel">
-                    <div className="col-md-12 filtersBox box">
-                      <div className="row">
-                        <div className="col-md-2 transactionsTitle1">
-                          <h3>Filters</h3>
-                        </div>
-                        <div className="col-md-10">
-                          <div className="col-md-6">
-                            <form className="checkBoxes">
-                              {this.renderCheckBoxs()}
-
-                            </form>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="startDate col-md-6 addTransactionBtn">
-                              Start Date:
-                              <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
-                            </div>
-                            <div className="endDate col-md-6 addTransactionBtn">
-                              End Date:
-                              <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
-                            </div>
-                          </div>
-
-                        </div>
+            { this.props.currentUser ?
+                <div className="row principal">
+                  <div className="col-md-3">
+                    <div className="row accountsPanel panel">
+                      <div className="col-md-12 totalBox box">
+                        <h3 className="accountTitle">Total</h3>
+                        <h1 className="bigNumber">{this.calculateValues()[0]}</h1>
+                      </div>
+                      <div className="col-md-12 account1Box box">
+                        <h3 className="accountTitle">Cash</h3>
+                        <h1 className="bigNumber">{this.calculateValues()[1]}</h1>
+                        <div className="accountsText">Last Transaction: -100.000 in 21/03/2017</div>
+                      </div>
+                      <div className="col-md-12 account2Box box">
+                        <h3 className="accountTitle">Bank Account</h3>
+                        <h1 className="bigNumber">{this.calculateValues()[2]}</h1>
+                        <div className="accountsText">Last Transaction: +200.000 in 21/03/2017</div>
                       </div>
                     </div>
-                    <div className="col-md-12 addTransactionBox box">
-                      <div className="form" onSubmit={this.handleSubmit.bind(this)}>
+                  </div>
+
+                  <div className="col-md-9">
+                    <div className="row transactionsPanel panel">
+                      <div className="col-md-12 filtersBox box">
                         <div className="row">
-                          <div className="col-md-2 transactionsTitle2">
-                            <h3>Add Transaction</h3>
+                          <div className="col-md-2 transactionsTitle1 filtersTitle">
+                            <h3>Filters</h3>
                           </div>
-                          <div className="col-md-10">
-                            <form onSubmit={this.handleSubmit.bind(this)}>
-                              <div className="row">
-                                <div className="col-md-2 addTransactionField">
-                                  <input type="text" className="form-control" id="amount" ref="amount"
-                                         placeholder="Amount"/>
-                                </div>
-                                <div className="col-md-4 addTransactionField">
-                                  <input type="text" className="form-control" id="description" ref="description"
-                                         placeholder="Description"/>
-                                </div>
-                                <div className="col-md-2 addTransactionField">
-                                  <select className="form-control littleSelectList" ref="account" name="account">
-                                    <option value="Cash">Cash</option>
-                                    <option value="Bank">Bank</option>
-                                  </select>
-                                </div>
-                                <div className="col-md-1 addTransactionField ">
-                                  <select className="form-control littleSelectList" ref="io" name="io">
-                                    <option value="In">In</option>
-                                    <option value="Out">Out</option>
-                                  </select>
-                                </div>
-                                <div className="col-md-2 addTransactionBtn">
-                                  <CustomDataPicker/>
-                                </div>
-                                <div className="col-md-1 addTransactionBtn">
-                                  <button type="submit" className="btn btn-default"><i className="fa fa-save"> </i>
-                                  </button>
+                          <div className="col-md-10  bottomBorder">
+                            <div className="row">
+                              <div className="col-md-5">
+                                <form className="checkBoxes">
+                                  {this.renderCheckBoxs()}
+                                </form>
+                              </div>
+                              <div className="col-md-7">
+                                <div className="row">
+                                  <div className="dateFilter col-md-6">
+                                    <label>Start Date:</label>
+                                    <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
+                                  </div>
+                                  <div className="dateFilter col-md-6">
+                                    <label>End Date:</label>
+                                    <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
+                                  </div>
                                 </div>
                               </div>
-                            </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 addTransactionBox box">
+                        <div className="form" onSubmit={this.handleSubmit.bind(this)}>
+                          <div className="row">
+                            <div className="col-md-2 transactionsTitle2 addTransactionTitle">
+                              <h3>Add Transaction</h3>
+                            </div>
+                            <div className="col-md-10">
+                              <form onSubmit={this.handleSubmit.bind(this)}>
+                                <div className="row">
+                                  <div className="col-md-2 addTransactionField">
+                                    <input type="text" className="form-control" id="amount" ref="amount"
+                                           placeholder="Amount"/>
+                                  </div>
+                                  <div className="col-md-4 addTransactionField">
+                                    <input type="text" className="form-control" id="description" ref="description"
+                                           placeholder="Description"/>
+                                  </div>
+                                  <div className="col-md-2 addTransactionField">
+                                    <select className="form-control littleSelectList" ref="account" name="account">
+                                      <option value="Cash">Cash</option>
+                                      <option value="Bank">Bank</option>
+                                    </select>
+                                  </div>
+                                  <div className="col-md-1 addTransactionField ">
+                                    <select className="form-control littleSelectList" ref="io" name="io">
+                                      <option value="In">In</option>
+                                      <option value="Out">Out</option>
+                                    </select>
+                                  </div>
+                                  <div className="col-md-2 addTransactionBtn">
+                                    <CustomDataPicker/>
+                                  </div>
+                                  <div className="col-md-1 addTransactionBtn">
+                                    <button type="submit" className="btn btn-default"><i className="fa fa-save"> </i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 transactionsBox box">
+                        <div className="table-responsive">
+                          <table className="table table-hover ">
+                            <tbody>
+                            {this.renderTransactions()}
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                      <div className="col-md-12 summaryBox box">
+                        <div className="row">
+                          <div className="col-md-2 transactionsTitle2 summaryBoxTitle">
+                            <h3>Summary</h3>
+                          </div>
+                          <div className="col-md-10">
+                            {this.renderSummary()}
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-12 transactionsBox box">
-                      <div className="table-responsive">
-                        <table className="table table-hover ">
-                          <tbody>
-                          {this.renderTransactions()}
-                          </tbody>
-
-                        </table>
-                      </div>
-                    </div>
-                    <div className="col-md-12 summaryBox box">
-                      <div className="row">
-                        <div className="col-md-2 transactionsTitle2">
-                          <h3>Summary</h3>
-                        </div>
-                        <div className="col-md-10 transactionsTitle2">
-                          {this.renderSummary()}
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </div>: ''
-          }
+                </div> : ''
+            }
 
+          </div>
         </div>
-
     );
   }
 }
@@ -373,7 +391,7 @@ export default createContainer(() =>
 {
   Meteor.subscribe('transactions');
   return {
-    transactions: Transactions.find({}, { sort: { date: -1 } }).fetch(),
+    transactions: Transactions.find({}, {sort: {date: -1}}).fetch(),
     currentUser: Meteor.user(),
   };
 }, App);
