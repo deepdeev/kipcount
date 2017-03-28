@@ -31,6 +31,7 @@ export default class CustomDataPicker extends Component {
   render()
   {
     return (
+
         <DatePicker id="addTransactionDatePicker" value={this.state.value} onChange={this.handleChange}
                     showClearButton={false}/>
     );

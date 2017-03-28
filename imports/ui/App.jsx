@@ -16,8 +16,8 @@ class App extends Component {
     super(props);
     this.state = {
       types: [{type: "Cash", selected: false}, {type: "Bank", selected: false}, {type: "In", selected: false}, {type: "Out", selected: false}],
-      startDate:null,
-      endDate:null
+      startDate: null,
+      endDate: null
 
     };
 
@@ -26,7 +26,8 @@ class App extends Component {
     this.filteredTransactions = this.filteredTransactions.bind(this);
   }
 
-  filteredTransactions(){
+  filteredTransactions()
+  {
     let filteredTransactions = this.props.transactions;
     //Cash y Bank filter
     if (!this.state.types[0].selected || !this.state.types[1].selected)
@@ -57,17 +58,17 @@ class App extends Component {
         });
     }
     //Date Filters
-    if (this.state.startDate!=null || this.state.endDate!=null)
+    if (this.state.startDate != null || this.state.endDate != null)
     {
-      if (this.state.startDate!=null)
+      if (this.state.startDate != null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.date>=new Date(this.state.startDate.split("T")[0]+"T00:00:00.000Z");
+          return currentTransaction.date >= new Date(this.state.startDate.split("T")[0] + "T00:00:00.000Z");
         });
-      if (this.state.endDate!=null)
+      if (this.state.endDate != null)
         filteredTransactions = filteredTransactions.filter((currentTransaction) =>
         {
-          return currentTransaction.date<=new Date(this.state.endDate.split("T")[0]+"T23:59:59.000Z");
+          return currentTransaction.date <= new Date(this.state.endDate.split("T")[0] + "T23:59:59.000Z");
         });
     }
     return filteredTransactions;
@@ -85,47 +86,47 @@ class App extends Component {
         <Transaction key={transaction._id} transaction={transaction}/>
     ));
   }
-  renderSummary(){
+
+  renderSummary()
+  {
     let filteredTransactions = this.filteredTransactions();
-    let q =  filteredTransactions.length;
+    let q = filteredTransactions.length;
     let subtotal = 0;
     let qIn = 0;
     let qOut = 0;
-    filteredTransactions.map( (transaction) => {
-      if(transaction.io === "In"){
+    filteredTransactions.map((transaction) =>
+    {
+      if (transaction.io === "In")
+      {
         subtotal += transaction.amount;
         qIn += 1;
       }
-      else {
+      else
+      {
         subtotal -= transaction.amount;
-        qOut +=1;
+        qOut += 1;
       }
     });
 
-    return(
-      <div>
-        <div className="col-md-3 summaryTitle">
-          Subtotal:
-          <br></br>
-          {subtotal}
+    return (
+        <div className="row">
+          <div className="col-md-3 summaryField">
+            <h4>Subtotal</h4>
+            <p>{subtotal}</p>
+          </div>
+          <div className="col-md-3 summaryField">
+            <h4>Quantity</h4>
+            <p>{q}</p>
+          </div>
+          <div className="col-md-3 summaryField">
+            <h4>In</h4>
+            <p>{qIn}</p>
+          </div>
+          <div className="col-md-3 summaryField">
+            <h4>Out</h4>
+            <p>{qOut}</p>
+          </div>
         </div>
-        <div className="col-md-3 summaryTitle">
-          Quantity:
-          <br></br>
-          {q}
-        </div>
-        <div className="col-md-3 summaryTitle">
-          In:
-          <br></br>
-          {qIn}
-        </div>
-        <div className="col-md-3 summaryTitle">
-          Out:
-          <br></br>
-          {qOut}
-        </div>
-
-      </div>
     )
   }
 
@@ -209,17 +210,23 @@ class App extends Component {
     //  console.log("total "+total);
     return values;
   }
-  changeDateFilter(dateType, value){
 
-    if(dateType === "startDate"){
+  changeDateFilter(dateType, value)
+  {
+
+    if (dateType === "startDate")
+    {
       this.setState({startDate: value})
     }
-    else if(dateType === "endDate"){
+    else if (dateType === "endDate")
+    {
       this.setState({endDate: value})
-    } else{
+    }
+    else
+    {
       console.log("error")
     }
-    console.log(dateType+"  "+value);
+    console.log(dateType + "  " + value);
   }
 
   handleFiltersChange(index)
@@ -260,34 +267,36 @@ class App extends Component {
               <div className="row transactionsPanel panel">
                 <div className="col-md-12 filtersBox box">
                   <div className="row">
-                    <div className="col-md-2 transactionsTitle1">
+                    <div className="col-md-2 transactionsTitle1 filtersTitle">
                       <h3>Filters</h3>
                     </div>
-                    <div className="col-md-10">
-                      <div className="col-md-6">
-                        <form className="checkBoxes">
-                          {this.renderCheckBoxs()}
-
-                        </form>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="startDate col-md-6 addTransactionBtn">
-                          Start Date:
-                          <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
+                    <div className="col-md-10  bottomBorder">
+                      <div className="row">
+                        <div className="col-md-5">
+                          <form className="checkBoxes">
+                            {this.renderCheckBoxs()}
+                          </form>
                         </div>
-                        <div className="endDate col-md-6 addTransactionBtn">
-                          End Date:
-                          <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
+                        <div className="col-md-7">
+                          <div className="row">
+                            <div className="dateFilter col-md-6">
+                              <label>Start Date:</label>
+                              <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
+                            </div>
+                            <div className="dateFilter col-md-6">
+                              <label>End Date:</label>
+                              <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
+                            </div>
+                          </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
                 <div className="col-md-12 addTransactionBox box">
                   <div className="form" onSubmit={this.handleSubmit.bind(this)}>
                     <div className="row">
-                      <div className="col-md-2 transactionsTitle2">
+                      <div className="col-md-2 transactionsTitle2 addTransactionTitle">
                         <h3>Add Transaction</h3>
                       </div>
                       <div className="col-md-10">
@@ -338,10 +347,10 @@ class App extends Component {
                 </div>
                 <div className="col-md-12 summaryBox box">
                   <div className="row">
-                    <div className="col-md-2 transactionsTitle2">
+                    <div className="col-md-2 transactionsTitle2 summaryBoxTitle">
                       <h3>Summary</h3>
                     </div>
-                    <div className="col-md-10 transactionsTitle2">
+                    <div className="col-md-10">
                       {this.renderSummary()}
                     </div>
                   </div>
@@ -362,6 +371,6 @@ App.propTypes = {
 export default createContainer(() =>
 {
   return {
-    transactions: Transactions.find({}, { sort: { date: -1 } }).fetch(),
+    transactions: Transactions.find({}, {sort: {date: -1}}).fetch(),
   };
 }, App);
