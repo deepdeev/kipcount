@@ -1,3 +1,4 @@
+//Sería chévere tener la funcionalidad de eliminar y poder añadir categorías a cada transacción.
 import React, {Component, PropTypes} from 'react';
 import {Meteor} from 'meteor/meteor';
 import {createContainer} from 'meteor/react-meteor-data';
