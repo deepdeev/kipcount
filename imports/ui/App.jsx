@@ -428,6 +428,17 @@ class App extends Component {
                         </div>
                       </div>
                     </div>
+                    <div className="container-fluid footer">
+                      <div className="row">
+                        <div className="col-md-1 col-sm-1">
+                        </div>
+                        <div className="col-md-10 col-sm-10">
+                          <p className="copyRight">Designed and developed by <a href="https://twitter.com/luisMesa25">Luis Mesa</a> and <a href="https://twitter.com/daviddrweb">David Ruiz</a></p>
+                        </div>
+                        <div className="col-md-1 col-sm-1">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
             }

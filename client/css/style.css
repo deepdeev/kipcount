@@ -319,3 +319,23 @@ body {
     color: #000;
     letter-spacing:2px;
 }
+.footer
+{
+    margin-top: 22vh;
+    color: #000;
+    margin-bottom: 2px;
+    height: 15px!important;
+}
+.footer p
+{
+    margin: 0;
+}
+.copyRight
+{
+    font-size: 90%;
+
+}
+.copyRight a
+{
+    color: #1abc9c; ;
+}
