@@ -3,6 +3,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     /*color: #000;*/
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 @font-face {
     font-family: 'Cookit-Regular';
