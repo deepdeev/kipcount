@@ -1,3 +1,4 @@
+// El uso de 'use strict' es recomendado. Deberían añadir un método para eliminar transacciones.
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
