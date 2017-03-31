@@ -6,6 +6,7 @@ import '../imports/startup/accounts-config.js';
 import App from '../imports/ui/App.jsx';
 
 Meteor.startup(() => {
+  $.getScript('../../public/js/aos.js', function(){});
   $.getScript('../../js/bootstrap.js', function(){});
   $.getScript('../../js/jquery.min.js', function(){});
   $.getScript('../../js/main.js', function(){});

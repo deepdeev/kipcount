@@ -296,14 +296,12 @@ class App extends Component {
                               <div className="col-md-7">
                                 <div className="row">
                                   <div className="dateFilter col-md-6">
-                                    <label>Start Date:
+                                    <label>Start Date:</label>
                                     <CustomDateFilter dateType={"startDate"} changeDateFilter={this.changeDateFilter}/>
-                                    </label>
                                   </div>
                                   <div className="dateFilter col-md-6">
-                                    <label>End Date:
+                                    <label>End Date:</label>
                                     <CustomDateFilter dateType={"endDate"} changeDateFilter={this.changeDateFilter}/>
-                                    </label>
                                   </div>
                                 </div>
                               </div>
@@ -321,17 +319,13 @@ class App extends Component {
                               <form onSubmit={this.handleSubmit.bind(this)}>
                                 <div className="row">
                                   <div className="col-md-2 addTransactionField">
-                                    <label>
                                     <input type="text" className="form-control" id="amount" ref="amount"
                                            placeholder="Amount"/>
-                                    </label>
                                   </div>
-
-                                    <label className="col-md-4 addTransactionField">
+                                  <div className="col-md-4 addTransactionField">
                                     <input type="text" className="form-control" id="description" ref="description"
                                            placeholder="Description"/>
-                                    </label>
-
+                                  </div>
                                   <div className="col-md-2 addTransactionField">
                                     <select className="form-control littleSelectList" ref="account" name="account">
                                       <option value="Cash">Cash</option>
@@ -344,13 +338,13 @@ class App extends Component {
                                       <option value="Out">Out</option>
                                     </select>
                                   </div>
-                                  <label className="col-md-2 addTransactionBtn">
+                                  <div className="col-md-2 addTransactionBtn">
                                     <CustomDataPicker/>
-                                  </label>
-                                  <label className="col-md-1 addTransactionBtn">
+                                  </div>
+                                  <div className="col-md-1 addTransactionBtn">
                                     <button type="submit" className="btn btn-default"><i className="fa fa-save"> </i>
                                     </button>
-                                  </label>
+                                  </div>
                                 </div>
                               </form>
                             </div>
