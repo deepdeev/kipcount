@@ -1,0 +1,48 @@
+<template name="ourLoginInside">
+    {{#if currentUser}}
+        {{> dashboard}}
+    {{else}}
+        {{> login}}
+        {{> register}}
+    {{/if}}
+</template>
+
+<template name="ourLoginOutside">
+    {{#if currentUser}}
+        {{> dashboard}}
+    {{/if}}
+</template>
+
+<template name="dashboard">
+    <p>You're logged in {{currentUser.username}}</p>
+    <p><a href="#" class="logout">Logout</a></p>
+</template>
+
+<template name="register">
+    <form>
+      <label id="login-username-label" htmlFor="login-username">
+        <h1>Username</h1>
+      </label>
+        <input  class="form-control" type="username" name="registerUsername">
+        <label id="login-password-label" htmlFor="login-password">
+          <h1>Password</h1>
+        </label>
+        <input  class="form-control" type="password" name="registerPassword">
+        <input class="register btn btn-info" type="submit" value="Register">
+
+    </form>
+</template>
+
+<template name="login">
+    <form>
+      <label id="login-username-label" htmlFor="login-username">
+        <h1>Username</h1>
+      </label>
+        <input class="form-control" type="username" name="loginUsername">
+        <label id="login-password-label" htmlFor="login-password">
+          <h1>Password</h1>
+        </label>
+        <input  class="form-control" type="password" name="loginPassword">
+        <input class="btn btn-success" type="submit" value="Login">
+    </form>
+</template>
