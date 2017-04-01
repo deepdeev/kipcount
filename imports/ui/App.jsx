@@ -254,10 +254,10 @@ class App extends Component {
             <div className="col-md-7">
               <h1 className="navBarTitle">KipCount</h1>
             </div>
-            <div className="col-md-1 marginTop">
+            <div className="col-md-2 marginTop">
               <OutsideAccountsUIWrapper/>
             </div>
-            <div className="col-md-2"></div>
+            <div className="col-md-1"></div>
           </div>
           <div className="container">
             { this.props.currentUser ?
@@ -266,16 +266,16 @@ class App extends Component {
                     <div className="row accountsPanel panel">
                       <div className="col-md-12 totalBox box">
                         <h3 className="accountTitle">Total</h3>
-                        <h1 className="bigNumber">{this.calculateValues()[0]}</h1>
+                        <h1 className="bigNumber">{this.calculateValues()[0]}$</h1>
                       </div>
                       <div className="col-md-12 account1Box box">
                         <h3 className="accountTitle">Cash</h3>
-                        <h1 className="bigNumber">{this.calculateValues()[1]}</h1>
+                        <h1 className="bigNumber">{this.calculateValues()[1]}$</h1>
                         <div className="accountsText">Last Transaction: -100.000 in 21/03/2017</div>
                       </div>
                       <div className="col-md-12 account2Box box">
                         <h3 className="accountTitle">Bank Account</h3>
-                        <h1 className="bigNumber">{this.calculateValues()[2]}</h1>
+                        <h1 className="bigNumber">{this.calculateValues()[2]}$</h1>
                         <div className="accountsText">Last Transaction: +200.000 in 21/03/2017</div>
                       </div>
                     </div>
@@ -393,7 +393,20 @@ class App extends Component {
 
 
                         <div className="col-md-7 inspiringPhrase">
-                          <h1>Keep count of your income and expenses all in a single place!</h1>
+                          <div className="row">
+                          <h1 className="col-md-12">Keep count of your income and expenses all in a single place!</h1>
+                          <div className="container-fluid footer col-md-12">
+                            <div className="row">
+                              <div className="col-md-1 col-sm-1">
+                              </div>
+                              <div className="col-md-10 col-sm-10">
+                                <p className="copyRight">Designed and developed by <a href="https://twitter.com/luisMesa25">Luis Mesa</a> and <a href="https://twitter.com/daviddrweb">David Ruiz</a></p>
+                              </div>
+                              <div className="col-md-1 col-sm-1">
+                              </div>
+                            </div>
+                          </div>
+                          </div>
                         </div>
                         <div className="col-md-1"></div>
                         <div className="col-md-3">
@@ -403,17 +416,7 @@ class App extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="container-fluid footer">
-                      <div className="row">
-                        <div className="col-md-1 col-sm-1">
-                        </div>
-                        <div className="col-md-10 col-sm-10">
-                          <p className="copyRight">Designed and developed by <a href="https://twitter.com/luisMesa25">Luis Mesa</a> and <a href="https://twitter.com/daviddrweb">David Ruiz</a></p>
-                        </div>
-                        <div className="col-md-1 col-sm-1">
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
             }

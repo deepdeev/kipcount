@@ -293,7 +293,7 @@ body {
     z-index: 9999;
     margin-left: 2vw;
     margin-right: 20px;
-    margin-top: 10vh;
+    margin-top: 5vh;
     font-family: 'Roboto Condensed', sans-serif;
 }
 .loginBox
@@ -338,5 +338,23 @@ body {
 }
 .copyRight a
 {
-    color: #244F75;
+    color: #000;
+}
+.loginTitle
+{
+    margin: 5px;
+    padding: 1px;
+}
+.inputLogin,.inputRegister
+{
+    margin: 5px;
+    padding-bottom: 1px;
+}
+.logOut
+{
+    color:#fafafa;
+}
+a .logOut:hover
+{
+    color:#F24B4B;
 }

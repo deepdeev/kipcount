@@ -14,35 +14,43 @@
 </template>
 
 <template name="dashboard">
-    <p>You're logged in {{currentUser.username}}</p>
-    <p><a href="#" class="logout">Logout</a></p>
+    <p class="logOut">You're logged in {{currentUser.username}}</p>
+    <p><a href="#" class="logout logOut">Logout</a></p>
 </template>
 
 <template name="register">
     <form>
       <label id="login-username-label" htmlFor="login-username">
-        <h1>Username</h1>
-      </label>
-        <input  class="form-control" type="username" name="registerUsername">
-        <label id="login-password-label" htmlFor="login-password">
-          <h1>Password</h1>
-        </label>
-        <input  class="form-control" type="password" name="registerPassword">
-        <input class="register btn btn-info" type="submit" value="Register">
+        <h1 class="loginTitle">Username</h1>
 
+        <input  class="inputLogin form-control" type="username" name="registerUsername">
+      </label>
+        <label id="login-password-label" htmlFor="login-password">
+          <h1 class="loginTitle">Password</h1>
+
+        <input  class="inputLogin form-control" type="password" name="registerPassword">
+        </label>
+      <label>
+        <input class="register btn btn-info" type="submit" value="Register">
+      </label>
     </form>
 </template>
 
 <template name="login">
     <form>
-      <label id="login-username-label" htmlFor="login-username">
-        <h1>Username</h1>
+      <label id="login-username-label2" htmlFor="login-username">
+        <h1 class="loginTitle">Username</h1>
+
+        <input class="inputRegister form-control" type="username" name="loginUsername">
       </label>
-        <input class="form-control" type="username" name="loginUsername">
-        <label id="login-password-label" htmlFor="login-password">
-          <h1>Password</h1>
+        <label id="login-password-label2" htmlFor="login-password">
+          <h1 class="loginTitle">Password</h1>
+
+        <input  class="inputRegister form-control inputLogin" type="password" name="loginPassword">
         </label>
-        <input  class="form-control" type="password" name="loginPassword">
+      <label>
         <input class="btn btn-success" type="submit" value="Login">
+      </label>
     </form>
 </template>
+
