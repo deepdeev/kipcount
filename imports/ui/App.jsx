@@ -11,7 +11,7 @@ import CustomDateFilter from './CustomDateFilter';
 import CustomCheckBox from './CustomCheckBox';
 
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-
+//Me gusta mucho su página, es útil y fácil de usar. Tener en cuenta el uso de strict que se recomienda y los ligeros problemas con el login.
 
 // App component - represents the whole app
 class App extends Component {
