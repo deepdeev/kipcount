@@ -245,6 +245,11 @@ class App extends Component {
     // console.log(this.state.types[index].type + "  " + this.state.types[index].selected);
   }
 
+  //Pagina de introduccion para el usuario para entender para que es la aplicacion
+  //Colocar nombres a las distinatas columnas en la tabla de transacciones
+  //Manejo del tamaño de la letra para que sea visible en varias plataformas
+  
+  
   render()
   {
     return (

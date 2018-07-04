@@ -1,6 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 let DatePicker = require("react-bootstrap-date-picker");
 // Custom Data Picker component - allow the user to select a date to apply a filter
+
+//Manejo de espaciado para que el textField no toque el borde podria hacerse por css
+
 export default class CustomDateFilter extends Component {
   constructor(props)
   {
